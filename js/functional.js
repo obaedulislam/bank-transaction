@@ -6,19 +6,30 @@ function getInputValue(fieldId) {
     return value;
 }
 
+function getInnerTextValue(fieldId){
+    const fieldTag = document.getElementById(fieldId);
+    const filedValueInText = fieldTag.innerText;
+    const value = parseFloat(filedValueInText);
+    return value;
+}
+
 function updateTotal(fieldId, amount) {
-    const totalTag = document.getElementById(fieldId);
-    const previousTotalText = totalTag.innerText;
-    const previousTotal = parseFloat(previousTotalText);
+    // const totalTag = document.getElementById(fieldId);
+    // const previousTotalText = totalTag.innerText;
+    // const previousTotal = parseFloat(previousTotalText);
+    const previousTotal = getInnerTextValue(fieldId);
     const newTotal = previousTotal + amount;
-    totalTag.innerText = newTotal;
+    document.getElementById(fieldId).innerText = newTotal;
+
+    return newTotal;
 
 }
 
 function updateBalance(amount, isAdding) {
-    const balanceTag = document.getElementById("balance-total");
-    const previousBalanceText = balanceTag.innerText;
-    const previousBalance = parseFloat(previousBalanceText);
+    // const balanceTag = document.getElementById("balance-total");
+    // const previousBalanceText = balanceTag.innerText;
+    // const previousBalance = parseFloat(previousBalanceText);
+    const previousBalance = getInnerTextValue("balance-total");
     let newBalance;
     if(isAdding == true){
         newBalance = previousBalance + amount;
@@ -26,7 +37,7 @@ function updateBalance(amount, isAdding) {
     else{
         newBalance = previousBalance - amount;
     }
-    balanceTag.innerText = newBalance;
+    document.getElementById("balance-total").innerText = newBalance;
 }
 
 document.getElementById("deposit-button").addEventListener("click", function () {
@@ -41,10 +52,10 @@ document.getElementById("deposit-button").addEventListener("click", function () 
 
 document.getElementById("withdraw-button").addEventListener("click", function () {
     const withdrawAmount = getInputValue("withdraw-input");
-    if(withdrawAmount > 0){
+        const balance = getInnerTextValue("balance-total");
+    if(withdrawAmount > 0 && withdrawAmount <= balance){
         updateTotal("withdraw-total", withdrawAmount);
         updateBalance(withdrawAmount, false);
     }
-
 
 });
