@@ -15,16 +15,23 @@ function  updateTotal(fieldId, amount){
 
 }
 
+function updateBalance(amount){
+    const balanceTag = document.getElementById("balance-total");
+    const previousBalanceText = balanceTag.innerText;
+    const previousBalance = parseFloat(previousBalanceText);
+    const newBalance = previousBalance + amount;
+    balanceTag.innerText = newBalance;
+}
 
 document.getElementById("deposit-button").addEventListener("click", function(){
     const depositAmount = getInputValue("deposit-input");
     updateTotal("deposit-total", depositAmount);
-    
+    updateBalance(depositAmount);
 });
 /*== Deposit Update End == */
 
 document.getElementById("withdraw-button").addEventListener("click", function(){
     const withdrawAmount = getInputValue("withdraw-input");
-     updateTotal("withdraw-total", withdrawAmount);
+    updateTotal("withdraw-total", withdrawAmount);
 
 });
